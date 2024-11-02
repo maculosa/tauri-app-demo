@@ -1,8 +1,34 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
-import { fetch } from "@tauri-apps/plugin-http";
-import { request } from './utils'
+// import { ask } from '@tauri-apps/plugin-dialog';
+// import {
+//   isPermissionGranted,
+//   requestPermission,
+//   sendNotification,
+// } from '@tauri-apps/plugin-notification';
+
+
+// // 你有发送通知的权限吗？
+// let permissionGranted = await isPermissionGranted();
+
+// // 如果没有，我们需要请求它
+// if (!permissionGranted) {
+//   const permission = await requestPermission();
+//   permissionGranted = permission === 'granted';
+// }
+
+// // 一旦获得许可，我们就可以发送通知
+// if (permissionGranted) {
+//   sendNotification({ title: 'Tauri', body: 'Tauri is awesome!' });
+// }
+
+// const answer = await ask("This action cannot be reverted. Are you sure?", {
+//   title: 'Tauri',
+//   kind: 'warning',
+// })
+
+// console.log(answer)
 
 const greetMsg = ref("");
 const name = ref("");
@@ -11,51 +37,10 @@ async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
 }
-
-const captcha = ref("");
-
-async function getCaptcha() {
-  try {
-    const res = await fetch('http://101.200.34.181:8706/api/login/captcha', {
-      method: 'GET',
-    }).then(res => res.json())
-    captcha.value = res.data.captchaUrl
-    console.log('res: ', res.data)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-onMounted(() => {
-  getCaptcha()
-})
-
 </script>
 
 <template>
-  <main class="container">
-    <h1>Welcome to Tauri + Vue</h1>
-
-    <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
-    </div>
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
-
-    <form class="row" @submit.prevent="greet">
-      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
-      <button type="submit">Greet</button>
-    </form>
-    <img :src="captcha" class="captcha" alt="captcha" @click="getCaptcha()" />
-    <p>{{ greetMsg }}</p>
-  </main>
+  <router-view />
 </template>
 
 <style scoped>
@@ -73,7 +58,6 @@ onMounted(() => {
   margin: 10px 0;
   cursor: pointer;
 }
-
 </style>
 <style>
 :root {
@@ -185,5 +169,4 @@ button {
     background-color: #0f0f0f69;
   }
 }
-
 </style>

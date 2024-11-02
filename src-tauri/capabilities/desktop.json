@@ -1,7 +1,23 @@
 {
-    "$schema": "../gen/schemas/desktop-schema.json",
-    "identifier": "desktop-capability",
-    "windows": ["main"],
-    "platforms": ["linux", "macOS", "windows"],
-    "permissions": []
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "desktop-capability",
+  "windows": [
+    "main"
+  ],
+  "platforms": [
+    "linux",
+    "macOS",
+    "windows"
+  ],
+  "permissions": [
+    "autostart:default",
+    "log:default",
+    "store:allow-get",
+    "store:allow-set",
+    "store:allow-save",
+    "store:allow-load",
+    "notification:allow-is-permission-granted",
+    "notification:default",
+    "dialog:default"
+  ]
 }

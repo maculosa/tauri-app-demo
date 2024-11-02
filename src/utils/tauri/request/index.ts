@@ -7,27 +7,28 @@ export interface RequestOptions {
   headers?: Record<string, string>;
 }
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 // 定义请求控制器
 const controller = new AbortController();
 
 // 封装请求函数
-export const request = async ({
-  url,
-  method,
-  data,
-  headers,
-}: RequestOptions) => {
+export const request = async (opts: RequestOptions) => {
+
   const options: any = {
-    method,
+    method: opts.method,
     headers: {
       "Content-Type": "application/json",
-      ...headers,
+      ...opts.headers,
     },
     signal: controller.signal
   };
-  if (data) {
-    options.body = JSON.stringify(data);
+  if (opts.data) {
+    options.body = JSON.stringify(opts.data);
   }
+
+  const url = baseUrl + opts.url;
+  
   const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
