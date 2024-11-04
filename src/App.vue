@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
+// import { ref } from "vue";
+// import { invoke } from "@tauri-apps/api/core";
 // import { ask } from '@tauri-apps/plugin-dialog';
 // import {
 //   isPermissionGranted,
@@ -30,13 +30,6 @@ import { invoke } from "@tauri-apps/api/core";
 
 // console.log(answer)
 
-const greetMsg = ref("");
-const name = ref("");
-
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
 </script>
 
 <template>
